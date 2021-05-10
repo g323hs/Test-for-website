@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			async function submitData(){
+				const Uname = document.getElementById('Uname').value;
+				const password = document.getElementById('password').value;
+
+				const data = {Uname, password};
+				const options = {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify(data)
+				};
+
+                const response = await fetch('/api', options);
+				const message = await response.text();
+
+				document.getElementById('error').innerHTML = `${message}`;
+			};
+		</script>
+
+		<h1>Data app</h1>
+		<a href = "/logs">logs</a>
+		
+		<p>
+			<label for="Uname">Username:</label>
+			<input type="text" id="Uname" name="Uname">
+		</p>
+		<p>
+			<label for="password">Password:</label>
+			<input type="password" id="password" name="password">
+		</p>
+		<p>
+			<input type="button" onclick="submitData()" value="Submit">
+		</p>
+		<div id="error"></div>
+	</body>
+</html>
