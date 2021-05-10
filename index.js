@@ -24,36 +24,6 @@ function close(db){
 	});
 }
 
-function lookup(Uname, password) {
-	var valid;
-	db = connect();
-
-	let sql = `
-	SELECT Uname, password 
-	FROM Users WHERE Uname == '` + Uname + `'`;
-
-	db.all(sql, (err, rows) => {
-		if (err) {
-			console.error(err.message);
-		} else {
-			if (rows.length != 0) {
-				rows.forEach((row) => {
-					if (row.Uname == Uname && row.password == password) {
-						valid = true;
-					}
-				})
-			} else {
-				console.log(false);
-				valid = false;
-			}
-			close(db);
-			console.log(valid);
-			return valid;
-		}
-	});
-}	
-
-
 
 // app stuff
 const app = express();
@@ -61,13 +31,6 @@ const app = express();
 app.listen(3000, () => console.log('listening at 3000'));
 app.use(express.static('public'));
 app.use(express.json({limit: '1mb' }));
-
-// get data from server
-//app.get('/api', (request, response) => {
-//	var valid;
-//	console.log("Sending data to client\n");
-//	response.send("Response");
-//});
 
 // send data to server
 app.post('/api', (request, response) => {
@@ -79,7 +42,7 @@ app.post('/api', (request, response) => {
 
 	var valid;
 	var email;
-	db = connect();
+	var db = connect();
 
 	let sql = `
 	SELECT Uname, password, email 
@@ -109,7 +72,7 @@ app.post('/api', (request, response) => {
 				response.send(text);
 			} else {
 				console.log("Sending data to client\n");
-				response.send("Invalid Username of password.");
+				response.send("Invalid Username or password.");
 			}
 		}
 	});
