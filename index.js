@@ -71,7 +71,7 @@ app.post('/api', (request, response) => {
 				var text = `Hi ` + name + ` your email is ` + email + `.`;
 				response.send(text);
 			} else {
-				console.log("Sending data to client\n");
+				console.log("Sending data to client");
 				response.send("Invalid Username or password.");
 			}
 		}
